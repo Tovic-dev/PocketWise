@@ -36,7 +36,7 @@ const ICON_NAMES: Partial<Record<IconName, string>> = {
 function duration(days: number) {
   if (days >= 45) return `unos ${Math.round(days / 30.44)} meses`
   if (days >= 14) return `unas ${Math.round(days / 7)} semanas`
-  return `${days} días`
+  return days === 1 ? "1 día" : `${days} días`
 }
 
 export function Goals() {
@@ -189,7 +189,7 @@ export function GoalForm({ mode }: { mode: "create" | "edit" }) {
   const target = parseAmount(amount)
   const validAmount = Number.isFinite(target) && target > 0
   const months = date
-    ? Math.max(1, (parseISODate(date).getTime() - today.getTime()) / 86_400_000 / 30.44)
+    ? Math.max(1, (parseISODate(date).getTime() - today.getTime()) / 86_400_000) / 30.44
     : 0
   const needed = validAmount && months ? Math.ceil(target / months) : 0
   const margin = monthlyMargin(plan)

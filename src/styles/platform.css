@@ -14,13 +14,16 @@ input, select, textarea { font-size: max(16px, 1em); }
 .device { padding-top: env(safe-area-inset-top); }
 .screen-full > .page, .sheet { padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 16px)); }
 
-@media (max-width: 539px) {
+/* En el móvil (y como app instalada) el marco se fija a los bordes de la pantalla.
+   Así la página no puede desplazarse —en iOS, overflow:hidden en el body no lo
+   impide— y solo hace scroll el contenido de cada pantalla: la cabecera queda
+   siempre accesible y la barra inferior, anclada abajo. */
+@media (max-width: 539px), (display-mode: standalone) {
   html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
-  #root, .app-stage { height: 100%; }
+  body, .app-stage { min-height: 0; }
+  .app-stage { padding: 0; }
+  .device { position: fixed; inset: 0; width: auto; max-width: none; height: auto; border-radius: 0; box-shadow: none; }
 }
 
-/* Abierta como app instalada: sin marco de móvil aunque la pantalla sea ancha */
-@media (display-mode: standalone) {
-  .app-stage { padding: 0; }
-  .device { max-width: none; height: 100dvh; border-radius: 0; box-shadow: none; }
-}
+/* El aviso flotante baja por debajo de la barra de estado */
+.toast { top: calc(env(safe-area-inset-top) + 12px); }

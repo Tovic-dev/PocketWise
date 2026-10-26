@@ -220,7 +220,9 @@ export function planGoals(goals: Goal[], monthlySaving: number, today: Date) {
   const base = goals.map((goal) => {
     const remaining = Math.max(0, goal.target - goal.saved)
     const days = (parseISODate(goal.date).getTime() - today.getTime()) / 86_400_000
-    const monthsLeft = Math.max(1, days / DAYS_PER_MONTH)
+    // Plazos de menos de un mes cuentan como fracción de mes (como mínimo un día):
+    // 300 € en 15 días son unos 600 € al mes, no 300.
+    const monthsLeft = Math.max(1, days) / DAYS_PER_MONTH
     return { goal, remaining, monthsLeft, needed: remaining / monthsLeft }
   })
   const totalNeeded = base.reduce((total, item) => total + item.needed, 0)
