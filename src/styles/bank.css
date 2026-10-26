@@ -1,0 +1,69 @@
+/* App del banco anfitrión (simulada). A propósito no usa la estética de
+   PocketWise: blanco, sistema y el color del banco, para que se note el cambio
+   de contexto al entrar en el módulo. */
+.device {
+  --bank-bg: #f4f5f7;
+  --bank-surface: #ffffff;
+  --bank-ink: #15171a;
+  --bank-ink-soft: #3b4048;
+  --bank-muted: #5d6470;
+  --bank-faint: #666c76;
+  --bank-chip: #eceef1;
+  --bank-line: #e3e5e9;
+  --bank-line-strong: #c3c7cf;
+  --bank-shadow: rgba(21, 23, 26, .08);
+}
+@media (prefers-color-scheme: dark) {
+  .device {
+    --bank-bg: #0f1012;
+    --bank-surface: #1b1d21;
+    --bank-ink: #eef0f3;
+    --bank-ink-soft: #c9cdd4;
+    --bank-muted: #9aa1ab;
+    --bank-faint: #9ba2ac;
+    --bank-chip: #262930;
+    --bank-line: #2c3038;
+    --bank-line-strong: #454b55;
+    --bank-shadow: rgba(0, 0, 0, .4);
+  }
+}
+.bank { background: var(--bank-bg); color: var(--bank-ink); font-family: var(--font-body); padding-bottom: 24px; }
+.bank-header { padding: 20px 20px 12px; display: flex; align-items: center; gap: 12px; }
+.bank-logo { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 18px; }
+.bank-header > div { flex: 1; }
+.bank-hello { margin: 0; font-size: 17px; font-weight: 600; }
+.bank-name { margin: 0; font-size: 13px; color: var(--bank-muted); }
+.bank-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--bank-chip); color: var(--bank-muted); }
+.bank-account { margin: 8px 16px 0; padding: 20px; border-radius: 18px; background: var(--bank-surface); box-shadow: 0 1px 3px var(--bank-shadow); }
+.bank-label { margin: 0; font-size: 13px; color: var(--bank-muted); }
+.bank-balance { margin: 6px 0 2px; font-size: 32px; font-weight: 700; letter-spacing: -.02em; }
+.bank-actions { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.bank-action { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 4px; border-radius: 12px; background: var(--bank-bg); font-size: 12px; font-weight: 500; color: var(--accent); }
+
+/* Tarjeta de entrada al módulo: aquí ya aparece la estética PocketWise */
+.module-entry { margin: 16px 16px 0; width: calc(100% - 32px); padding: 20px; border: 0; border-radius: 18px; background: var(--paper); color: var(--ink); text-align: left; display: grid; gap: 4px; cursor: pointer; box-shadow: inset 0 0 0 1px var(--border); }
+.module-entry-tag { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+.module-entry-label { font-size: 14px; color: var(--muted); }
+.module-entry-amount { font-family: var(--font-display); font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -.04em; }
+.module-entry-title { font-family: var(--font-display); font-size: 22px; line-height: 26px; font-weight: 600; letter-spacing: -.02em; }
+.module-entry-copy { font-size: 14px; line-height: 20px; color: var(--muted); }
+.module-entry-cta { margin-top: 10px; display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; color: var(--accent); }
+
+.bank-section { margin: 24px 16px 0; }
+.bank-section-title { margin: 0 0 8px 4px; font-size: 15px; font-weight: 600; }
+.bank-list { padding: 0 16px; border-radius: 18px; background: var(--bank-surface); box-shadow: 0 1px 3px var(--bank-shadow); }
+.bank-list .movement-row:last-child { border-bottom: 0; }
+.bank-list .category-icon { border-radius: 50%; background: var(--bank-chip); color: var(--bank-muted); }
+.bank-list .amount.negative { color: var(--bank-ink); }
+
+.bank-nav { flex: none; height: 76px; padding: 8px 8px max(8px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(4, 1fr); background: var(--bank-surface); border-top: 1px solid var(--bank-line); }
+.bank-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 11.5px; color: var(--bank-faint); }
+.bank-nav-item.active { color: var(--accent); font-weight: 600; }
+
+/* Panel para controlar la demo en la presentación */
+.demo-panel { margin: 28px 16px 0; padding: 4px 16px; border-radius: 14px; border: 1px dashed var(--bank-line-strong); color: var(--bank-ink-soft); font-size: 14px; }
+.demo-panel summary { padding: 10px 0; cursor: pointer; font-weight: 600; color: var(--bank-muted); }
+.demo-group { display: grid; gap: 8px; padding: 10px 0; }
+.demo-label { font-size: 12px; font-weight: 600; color: var(--bank-muted); }
+.demo-hint { font-size: 12px; color: var(--bank-faint); }
+.demo-buttons { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 14px; }

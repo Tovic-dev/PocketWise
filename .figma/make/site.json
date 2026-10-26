@@ -1,0 +1,11 @@
+{
+  "title": "PocketWise",
+  "description": "Provides an interactive mobile prototype for Pocketwise, enabling users to explore its features and UX flows for financial management and budgeting.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

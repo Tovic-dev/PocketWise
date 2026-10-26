@@ -1,0 +1,6 @@
+# Texto con saltos de línea LF; imágenes y fuentes como binarios normales (sin Git LFS,
+# para que Vercel publique los archivos reales).
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.woff2 binary

@@ -1,0 +1,26 @@
+/* Comportamiento de app instalada en el iPhone (y en cualquier móvil) */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: manipulation; }
+* { -webkit-tap-highlight-color: transparent; }
+button, label, .chip, .bottom-nav, .bank-nav, .host-bar, .bento, .month-bars { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+img, svg { -webkit-user-drag: none; }
+
+/* Solo hace scroll la pantalla: la página no rebota ni se arrastra entera */
+.screen { overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+
+/* Safari hace zoom al enfocar campos de menos de 16 px */
+input, select, textarea { font-size: max(16px, 1em); }
+
+/* Zonas seguras: Dynamic Island / notch arriba y barra de inicio abajo */
+.device { padding-top: env(safe-area-inset-top); }
+.screen-full > .page, .sheet { padding-bottom: max(32px, calc(env(safe-area-inset-bottom) + 16px)); }
+
+@media (max-width: 539px) {
+  html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+  #root, .app-stage { height: 100%; }
+}
+
+/* Abierta como app instalada: sin marco de móvil aunque la pantalla sea ancha */
+@media (display-mode: standalone) {
+  .app-stage { padding: 0; }
+  .device { max-width: none; height: 100dvh; border-radius: 0; box-shadow: none; }
+}

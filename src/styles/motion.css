@@ -1,0 +1,133 @@
+/* Movimiento: transiciones entre pantallas, gesto de volver y microanimaciones.
+   Todo se desactiva con «reducir movimiento» (ver el final del archivo). */
+:root {
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-nav: cubic-bezier(.32, .72, 0, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+}
+
+/* ---------- Transiciones entre pantallas (View Transitions) ---------- */
+.screen { view-transition-name: screen; position: relative; z-index: 1; }
+.bottom-nav, .bank-nav { view-transition-name: tabbar; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-group(screen) { animation: none; }
+::view-transition-old(screen), ::view-transition-new(screen) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: top left;
+  mix-blend-mode: normal;
+  animation-duration: .42s;
+  animation-timing-function: var(--ease-nav);
+  animation-fill-mode: both;
+}
+html[data-nav="push"]::view-transition-old(screen) { animation-name: nav-old-push; }
+html[data-nav="push"]::view-transition-new(screen) { animation-name: nav-new-push; box-shadow: -10px 0 30px rgba(28, 27, 25, .12); }
+html[data-nav="pop"]::view-transition-old(screen) { animation-name: nav-old-pop; z-index: 2; box-shadow: -10px 0 30px rgba(28, 27, 25, .12); }
+html[data-nav="pop"]::view-transition-new(screen) { animation-name: nav-new-pop; }
+html[data-nav="fade"]::view-transition-old(screen) { animation: fade-out .14s ease-out both; }
+html[data-nav="fade"]::view-transition-new(screen) { animation: fade-in .22s ease-out both; }
+
+@keyframes nav-new-push { from { transform: translateX(100%); } }
+@keyframes nav-old-push { to { transform: translateX(-28%); opacity: .85; } }
+@keyframes nav-new-pop { from { transform: translateX(-28%); opacity: .85; } }
+@keyframes nav-old-pop { to { transform: translateX(100%); } }
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
+
+/* ---------- Deslizar desde el borde para volver ---------- */
+.swipe-shade { position: absolute; inset: 0; z-index: 0; background: #000; opacity: 0; pointer-events: none; }
+.device.is-swiping .screen { box-shadow: -10px 0 30px rgba(28, 27, 25, .14); }
+.device.is-swiping .bottom-nav { visibility: hidden; }
+
+/* ---------- Esqueletos de carga ---------- */
+.skeleton { position: relative; overflow: hidden; background: color-mix(in srgb, var(--ink) 8%, var(--paper)); border-radius: 12px; }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--card) 70%, transparent), transparent); animation: shimmer 1.3s ease-in-out infinite; }
+@keyframes shimmer { to { transform: translateX(100%); } }
+.content-enter > .page { animation: content-in .32s var(--ease-out) both; }
+@keyframes content-in { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- Microanimaciones de datos ---------- */
+.breakdown-segment { transform-origin: left center; animation: grow-x .7s var(--ease-out) both; }
+.breakdown-segment:nth-child(2) { animation-delay: .06s; }
+.breakdown-segment:nth-child(3) { animation-delay: .12s; }
+.breakdown-segment:nth-child(4) { animation-delay: .18s; }
+.impact-part { transform-origin: left center; animation: grow-x .6s var(--ease-out) both; }
+.impact-part:nth-child(2) { animation-delay: .08s; }
+.impact-part:nth-child(3) { animation-delay: .16s; }
+.progress-fill, .goal-cover-track > span { transform-origin: left center; animation: grow-x .9s var(--ease-out) .1s both; }
+.month-bar-fill { transform-origin: bottom center; animation: grow-y .6s var(--ease-out) both; }
+.month-bar:nth-child(3) .month-bar-fill { animation-delay: .04s; }
+.month-bar:nth-child(4) .month-bar-fill { animation-delay: .08s; }
+.month-bar:nth-child(5) .month-bar-fill { animation-delay: .12s; }
+.month-bar:nth-child(6) .month-bar-fill { animation-delay: .16s; }
+.month-bar:nth-child(7) .month-bar-fill { animation-delay: .2s; }
+.bento-tile { animation: tile-in .5s var(--ease-out) both; }
+.bento-tile:nth-child(2) { animation-delay: .04s; }
+.bento-tile:nth-child(3) { animation-delay: .08s; }
+.bento-tile:nth-child(4) { animation-delay: .12s; }
+.bento-tile:nth-child(5) { animation-delay: .16s; }
+.bento-tile:nth-child(6) { animation-delay: .2s; }
+@keyframes grow-x { from { transform: scaleX(0); } }
+@keyframes grow-y { from { transform: scaleY(0); } }
+@keyframes tile-in { from { opacity: 0; transform: scale(.94); } }
+
+/* ---------- Respuesta al tocar ---------- */
+.button, .chip, .nav-item, .simulate-nav, .setting-row, button.movement-row, .home-goal, .home-insight,
+.goal-cover, .goal-new, .bento-tile, .module-entry, .charge-row, .add-goal-row, .impact-choice,
+.category-option, .cover-icon, .cover-swatch, .text-link, .icon-button, .month-bar {
+  transition: transform .18s var(--ease-out), background-color .18s, opacity .2s;
+}
+.button:active, .chip:active, .icon-button:active, .cover-icon:active, .cover-swatch:active, .category-option:active { transform: scale(.95); }
+.setting-row:active, button.movement-row:active, .charge-row:active, .add-goal-row:active, .home-goal:active,
+.home-insight:active, .goal-new:active, .module-entry:active, .impact-choice:active { transform: scale(.985); }
+.simulate-nav:active .icon { transform: scale(.9); }
+.simulate-nav .icon { transition: transform .2s var(--ease-spring); }
+.nav-item:active { transform: scale(.92); }
+
+/* ---------- Hojas inferiores (arrastrables) ---------- */
+.sheet { touch-action: none; will-change: transform; }
+.sheet.dragging { transition: none; }
+.sheet.settling { transition: transform .32s var(--ease-nav); }
+.sheet-backdrop.closing { animation: fade-out .24s ease-out both; }
+.sheet.closing { animation: sheet-down .26s var(--ease-nav) both; }
+.sheet-handle { cursor: grab; padding: 8px 24px; margin: -8px 0; background-clip: content-box; box-sizing: content-box; }
+@keyframes sheet-down { to { transform: translateY(100%); } }
+
+/* ---------- Toast ---------- */
+.toast { touch-action: none; animation: toast-in .5s var(--ease-spring) both; }
+.toast.leaving { animation: toast-out .22s ease-in both; }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, -24px) scale(.96); } }
+@keyframes toast-out { to { opacity: 0; transform: translate(-50%, -24px); } }
+
+/* ---------- Título grande que pasa a la barra al hacer scroll ---------- */
+.host-title { position: absolute; left: 50%; transform: translate(-50%, 4px); font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink); opacity: 0; transition: opacity .2s, transform .2s var(--ease-out); pointer-events: none; white-space: nowrap; }
+.host-bar.compact .host-title { opacity: 1; transform: translate(-50%, 0); }
+.host-bar.compact .host-module { opacity: 0; }
+.host-module { transition: opacity .2s; }
+.host-bar { transition: border-color .2s; }
+.host-bar:not(.compact) { border-bottom-color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(screen), ::view-transition-new(screen) { animation: none !important; }
+  .skeleton::after { animation: none; }
+}
+
+/* ---------- Maqueta de los esqueletos ---------- */
+.skeleton-page { padding-top: 14px; gap: 26px; }
+.bone { display: block; flex: none; }
+.bone-stack { display: grid; gap: 10px; }
+.bone-header { display: flex; align-items: center; justify-content: space-between; }
+.bone-section { display: grid; gap: 14px; }
+.bone-rule { display: block; height: 1.5px; background: var(--border); }
+.bone-rows { display: grid; }
+.bone-row { min-height: 64px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+.bone-row-text { flex: 1; display: grid; gap: 7px; }
+.bone-bento { display: grid; grid-template-columns: 1.6fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; aspect-ratio: 342 / 236; }
+.sync-line { display: inline-flex; align-items: center; gap: 8px; margin-bottom: -12px; font-size: 13px; font-weight: 500; color: var(--muted); }
+.sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse-dot 1s ease-in-out infinite alternate; }
+@keyframes pulse-dot { from { opacity: .35; transform: scale(.8); } }
+.device[data-entering] .screen > .page { animation: content-in .36s var(--ease-out) both; }
+
+.toast-text { flex: 1; display: grid; gap: 1px; min-width: 0; }
+.toast-action { flex: none; padding: 8px 14px; border: 0; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 14px; font-weight: 600; cursor: pointer; }

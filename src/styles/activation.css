@@ -1,0 +1,50 @@
+/* Activación: la primera vez que se entra en el módulo */
+.activation-page { padding-top: 12px; gap: 0; }
+.activation-header { min-height: 48px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+.activation-header .host-back { margin-left: -8px; }
+.activation-step { font-size: 14px; font-weight: 500; color: var(--muted); }
+
+.activation-intro { display: grid; gap: 16px; margin-top: 12px; }
+.activation-intro .h1 { font-size: 34px; line-height: 38px; }
+.intro-figure { margin-top: 36px; padding: 22px 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--border); display: grid; gap: 14px; }
+.intro-row { display: flex; justify-content: space-between; font-size: 15px; color: var(--muted); }
+.intro-row.strong { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--ink); }
+.intro-bar { display: flex; gap: 3px; height: 14px; }
+.intro-bar .seg { display: block; border-radius: 4px; }
+.intro-bar .fijos { flex: 4; background: var(--seg-fixed); }
+.intro-bar .ahorro { flex: 1.3; background: var(--seg-saving); }
+.intro-bar .gastado { flex: 2; background: var(--seg-spent); }
+.intro-bar .disponible { flex: 3; background: var(--ink); }
+.activation-actions { display: grid; gap: 12px; }
+
+.activation-section { display: grid; gap: 12px; margin-bottom: 28px; }
+.activation-section > .button-tertiary { justify-self: start; }
+.section-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.detected-note { display: flex; gap: 10px; align-items: flex-start; padding: 14px; border-radius: 14px; background: var(--info-bg); color: var(--info); }
+.detected-note .small { color: var(--ink-strong); }
+
+.reveal .activation-page { padding-top: 40px; gap: 26px; }
+.reveal-hero { display: grid; gap: 6px; }
+.reveal-amount { font-size: 72px; line-height: 1; font-weight: 700; letter-spacing: -.05em; margin: 4px 0; }
+.reveal-pace { color: var(--ink-strong); }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal .breakdown { animation: rise .6s .5s ease-out both; }
+  .reveal .reveal-pace { animation: rise .6s .8s ease-out both; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+/* Paso «analizando»: la barra del reparto se va llenando mientras se leen los movimientos */
+.analyzing { justify-content: center; align-items: flex-start; gap: 24px; }
+.analyzing-mark { width: 100%; display: flex; gap: 4px; height: 16px; }
+.analyzing-mark .seg { display: block; border-radius: 5px; transform-origin: left center; animation: grow-x .9s var(--ease-out) both; }
+.analyzing-mark .fijos { flex: 4; background: var(--seg-fixed); }
+.analyzing-mark .ahorro { flex: 1.4; background: var(--seg-saving); animation-delay: .4s; }
+.analyzing-mark .gastado { flex: 2; background: var(--seg-spent); animation-delay: .8s; }
+.analyzing-mark .disponible { flex: 3; background: var(--ink); animation-delay: 1.2s; }
+.analysis-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; font-size: 16px; color: var(--muted); }
+.analysis-steps li { display: flex; align-items: center; gap: 12px; transition: color .3s; }
+.analysis-steps li.active { color: var(--ink-strong); }
+.analysis-steps li.done { color: var(--ink); }
+.analysis-check { width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; border: 1.5px solid currentColor; color: transparent; transition: background-color .3s, color .3s, border-color .3s; }
+.analysis-steps li.done .analysis-check { background: var(--success); border-color: var(--success); color: var(--paper); }
+.analysis-steps li.active .analysis-check { border-color: var(--ink-strong); animation: pulse-dot .6s ease-in-out infinite alternate; }

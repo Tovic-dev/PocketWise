@@ -1,0 +1,99 @@
+/* Dirección visual B · editorial cálida.
+   La identidad de PocketWise está en el papel, la tinta y la tipografía.
+   El acento (--accent*) lo define el banco anfitrión: ver src/theme/hosts.ts. */
+:root {
+  --paper: #f3efe6;
+  --paper-deep: #ebe5d8;
+  --card: #fbf9f4;
+  --ink: #1c1b19;
+  --ink-strong: #3a3833;
+  --muted: #6b665c;
+  --disabled: #a8a296;
+  --border: #ddd6c8;
+  --surface-soft: #e8e2d5;
+
+  --success: #2a7050;
+  --success-bg: #e2eee5;
+  --danger: #b4493c;
+  --danger-bg: #f5e3de;
+  --warning: #8a5616;
+  --warning-bg: #f6ead4;
+  --info: #3c6a96;
+  --info-bg: #e1e9f1;
+
+  /* Reparto del dinero del mes (gráfico de barra) */
+  --seg-fixed: #cfc6b4;
+  --seg-saving: #8a9a7b;
+  --seg-spent: #b9a27a;
+
+  --accent: #2f6b4f;
+  --accent-pressed: #24543e;
+  --accent-soft: #dfe9e1;
+  --on-accent: #f6f3ec;
+
+  --font-display: "Bricolage Grotesque Variable", "Inter Variable", system-ui, sans-serif;
+  --font-body: "Inter Variable", system-ui, -apple-system, sans-serif;
+
+  --veil: rgba(255, 255, 255, .55);
+  --stage: #d9d3c6;
+  color-scheme: light dark;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--stage);
+  font-synthesis: none;
+}
+
+/* Los alias se declaran en .device para que tomen el acento del banco,
+   que llega como estilo en línea sobre ese mismo elemento. */
+.device {
+  --accent: var(--host-accent, #2f6b4f);
+  --accent-pressed: var(--host-accent-pressed, #24543e);
+  --accent-soft: var(--host-accent-soft, #dfe9e1);
+  --on-accent: var(--host-on-accent, #f6f3ec);
+  --primary: var(--accent);
+  --primary-pressed: var(--accent-pressed);
+  --primary-light: var(--accent);
+  --primary-soft: var(--accent-soft);
+  --primary-faint: color-mix(in srgb, var(--accent-soft) 45%, var(--card));
+  --white: var(--card);
+  --background: var(--paper);
+}
+
+/* Modo oscuro: papel oscuro y tinta clara. Sigue el ajuste del sistema. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #161513;
+    --paper-deep: #24221e;
+    --card: #1e1c19;
+    --ink: #f1ece2;
+    --ink-strong: #d8d2c6;
+    --muted: #a49d90;
+    --disabled: #6e685e;
+    --border: #36322c;
+    --surface-soft: #2a2723;
+
+    --success: #6fc296;
+    --success-bg: #1c2e23;
+    --danger: #ee8e7f;
+    --danger-bg: #3a201b;
+    --warning: #e3b26a;
+    --warning-bg: #352a17;
+    --info: #8db4dc;
+    --info-bg: #1b2633;
+
+    --seg-fixed: #4a453d;
+    --seg-saving: #6f8063;
+    --seg-spent: #9c875f;
+
+    --veil: rgba(255, 255, 255, .08);
+    --stage: #0d0c0b;
+  }
+
+  /* El color del banco se aclara para que se lea sobre fondo oscuro. */
+  .device {
+    --accent: color-mix(in oklab, var(--host-accent, #2f6b4f) 62%, white);
+    --accent-pressed: color-mix(in oklab, var(--host-accent, #2f6b4f) 75%, white);
+    --accent-soft: color-mix(in oklab, var(--host-accent, #2f6b4f) 30%, var(--paper));
+    --on-accent: #161513;
+  }
+}
