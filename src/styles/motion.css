@@ -9,6 +9,8 @@
 /* ---------- Transiciones entre pantallas (View Transitions) ---------- */
 .screen { view-transition-name: screen; position: relative; z-index: 1; }
 .bottom-nav, .bank-nav { view-transition-name: tabbar; }
+/* La barra va por encima de la pantalla: el botón central sobresale hacia arriba. */
+.bottom-nav, .bank-nav { position: relative; z-index: 2; }
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 ::view-transition-group(screen) { animation: none; }
 ::view-transition-old(screen), ::view-transition-new(screen) {
