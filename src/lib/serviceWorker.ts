@@ -8,6 +8,9 @@ export function registerServiceWorker() {
   if (!import.meta.env.PROD || !("serviceWorker" in navigator)) return
   window.addEventListener("load", async () => {
     try {
+      // En la primera visita no hay versión anterior: tomar el control no es
+      // una actualización y no hay que recargar.
+      const hadController = Boolean(navigator.serviceWorker.controller)
       const registration = await navigator.serviceWorker.register("/sw.js")
       const announce = (worker: ServiceWorker | null) => {
         if (worker && navigator.serviceWorker.controller)
@@ -22,7 +25,7 @@ export function registerServiceWorker() {
       })
       let reloading = false
       navigator.serviceWorker.addEventListener("controllerchange", () => {
-        if (reloading) return
+        if (reloading || !hadController) return
         reloading = true
         window.location.reload()
       })
