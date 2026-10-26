@@ -24,3 +24,6 @@ logs/
 /src/imports/
 /AGENTS.md
 /CLAUDE.md
+
+.vercel
+.env*
